@@ -1,41 +1,38 @@
-import java.util.ArrayList;
-
 class Solution {
 
     static int merge(int[] arr, int left, int mid, int right) {
 
         ArrayList<Integer> merged = new ArrayList<>();
 
-        int i = left;
-        int j = mid + 1;
-
+        int first = left;
+        int second = mid + 1;
         int inversionCount = 0;
 
-        while (i <= mid && j <= right) {
+        while (first <= mid && second <= right) {
 
-            if (arr[i] <= arr[j]) {
-                merged.add(arr[i]);
-                i++;
+            if (arr[first] <= arr[second]) {
+                merged.add(arr[first]);
+                first++;
             } else {
-                merged.add(arr[j]);
-                j++;
+                merged.add(arr[second]);
+                second++;
 
-                inversionCount += (mid - i + 1);
+                inversionCount += (mid - first + 1);
             }
         }
 
-        while (i <= mid) {
-            merged.add(arr[i]);
-            i++;
+        while (first <= mid) {
+            merged.add(arr[first]);
+            first++;
         }
 
-        while (j <= right) {
-            merged.add(arr[j]);
-            j++;
+        while (second <= right) {
+            merged.add(arr[second]);
+            second++;
         }
 
-        for (int k = left; k <= right; k++) {
-            arr[k] = merged.get(k - left);
+        for (int index = 0; index < merged.size(); index++) {
+            arr[left + index] = merged.get(index);
         }
 
         return inversionCount;
@@ -43,8 +40,9 @@ class Solution {
 
     static int mergeSort(int[] arr, int left, int right) {
 
-        if (left >= right)
+        if (left >= right) {
             return 0;
+        }
 
         int mid = left + (right - left) / 2;
 
